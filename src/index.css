@@ -6,13 +6,13 @@
   * {
     box-sizing: border-box;
   }
-  
+
   body {
     margin: 0;
     padding: 0;
     background-color: #0a0e1a;
     color: #ffffff;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: "Inter", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -22,15 +22,15 @@
   .card {
     @apply bg-crypto-card border border-crypto-border rounded-lg p-6;
   }
-  
+
   .btn-primary {
     @apply bg-crypto-accent hover:bg-crypto-accent/80 text-crypto-dark font-medium px-4 py-2 rounded-lg transition-colors;
   }
-  
+
   .btn-secondary {
     @apply bg-crypto-card hover:bg-crypto-border text-white border border-crypto-border font-medium px-4 py-2 rounded-lg transition-colors;
   }
-  
+
   .crypto-grid {
     @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6;
   }

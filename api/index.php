@@ -135,8 +135,13 @@ class PortfolioManager {
 
 // Router
 $request_method = $_SERVER['REQUEST_METHOD'];
-$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$path = $_GET['path'] ?? parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $path = str_replace('/cryptoFolio Pro/api', '', $path);
+
+// Debug output
+if (!$path || $path === '/') {
+    $path = $_GET['endpoint'] ?? '/test';
+}
 
 $database = new Database();
 $db = $database->getConnection();
@@ -145,6 +150,10 @@ $portfolio = new PortfolioManager($db);
 
 try {
     switch ($path) {
+        case '/test':
+            echo json_encode(['status' => 'API working', 'method' => $request_method, 'path' => $path]);
+            break;
+            
         case '/prices':
             if ($request_method === 'GET') {
                 $ids = $_GET['ids'] ?? 'bitcoin,ethereum,cardano,solana,avalanche-2,polkadot';

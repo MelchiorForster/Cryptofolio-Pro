@@ -1,10 +1,10 @@
-import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar'
-import Dashboard from './pages/Dashboard'
-import Portfolio from './pages/Portfolio'
-import Markets from './pages/Markets'
-import Analytics from './pages/Analytics'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Dashboard from "./pages/Dashboard";
+import Portfolio from "./pages/Portfolio";
+import Markets from "./pages/Markets";
+import Analytics from "./pages/Analytics";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
         </main>
       </div>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
