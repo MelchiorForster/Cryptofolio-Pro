@@ -1,6 +1,37 @@
 # CryptoFolio Pro 🚀
 
-> \*\*Profe
+> **Professionelle Kryptowährungs-Portfolio-Management-Anwendung**
+
+Eine moderne, vollständig funktionsfähige Web-App für das Management von Kryptowährungs-Portfolios mit Echtzeit-Marktdaten und eleganter Benutzeroberfläche.
+
+## ✨ Features
+
+- 📊 **Real-time Portfolio Tracking** - Live-Aktualisierung der Portfolio-Werte
+- 💹 **Live Marktdaten** - Integration mit CoinGecko API für aktuelle Preise
+- 📱 **Responsive Design** - Optimiert für Desktop, Tablet und Mobile
+- 🎨 **Moderne UI/UX** - Dunkles Crypto-Theme mit Tailwind CSS
+- ⚡ **Schnelle Performance** - React 18 + Vite für optimale Geschwindigkeit
+- 🔐 **Sichere Backend-API** - PHP + MySQL für Datenpersistierung
+- 📈 **Portfolio Analytics** - Detaillierte Übersicht über Gewinne/Verluste
+- 🔔 **Preisalarme** - Benachrichtigungen bei Zielpreisen (geplant)
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+- **React 18** - Moderne UI-Komponenten
+- **Vite** - Schneller Build-Prozess
+- **Tailwind CSS** - Utility-First CSS Framework
+- **Axios** - HTTP-Client für API-Calls
+- **React Router** - Client-side Routing
+- **Lucide React** - Moderne Icon-Bibliothek
+
+### Backend
+
+- **PHP 8.2** - Server-side Logic
+- **MySQL** - Relationale Datenbank
+- **CoinGecko API** - Live Kryptowährungs-Daten
+- **XAMPP** - Lokale Entwicklungsumgebung
 
 ## 🚀 Quick Start
 
@@ -88,47 +119,6 @@ Contributions sind willkommen! Bitte erstelle einen Issue oder Pull Request.
 
 ---
 
-⭐ **Gefällt dir das Projekt? Gib ihm einen Stern!** ⭐ryptowährungs-Portfolio-Management-Anwendung\*\*
-
-Eine moderne, vollständig funktionsfähige Web-App für das Management von Kryptowährungs-Portfolios mit Echtzeit-Marktdaten und eleganter Benutzeroberfläche.
-
-## ✨ Features
-
-- 📊 **Real-time Portfolio Tracking** - Live-Aktualisierung der Portfolio-Werte
-- 💹 **Live Marktdaten** - Integration mit CoinGecko API für aktuelle Preise
-- 📱 **Responsive Design** - Optimiert für Desktop, Tablet und Mobile
-- 🎨 **Moderne UI/UX** - Dunkles Crypto-Theme mit Tailwind CSS
-- ⚡ **Schnelle Performance** - React 18 + Vite für optimale Geschwindigkeit
-- 🔐 **Sichere Backend-API** - PHP + MySQL für Datenpersistierung
-- 📈 **Portfolio Analytics** - Detaillierte Übersicht über Gewinne/Verluste
-- 🔔 **Preisalarme** - Benachrichtigungen bei Zielpreisen (geplant)
-
-## 🛠️ Tech Stack
-
-### Frontend
-
-- **React 18** - Moderne UI-Komponenten
-- **Vite** - Schneller Build-Prozess
-- **Tailwind CSS** - Utility-First CSS Framework
-- **Axios** - HTTP-Client für API-Calls
-- **React Router** - Client-side Routing
-- **Lucide React** - Moderne Icon-Bibliothek
-
-### Backend
-
-- **PHP 8.2** - Server-side Logic
-- **MySQL** - Relationale Datenbank
-- **CoinGecko API** - Live Kryptowährungs-Daten
-- **XAMPP** - Lokale Entwicklungsumgebung
-
-## Entwicklungsnotizen
-
-Dieses Repository enthält auch Entwicklungsnotizen und Projektdokumentation in separaten Markdown-Dateien.
-
-## Status
-
-🚧 In aktiver Entwicklung
-
 ---
 
-_Ein professionelles Kryptowährungs-Portfolio-Management-Tool_
+⭐ **Gefällt dir das Projekt? Gib ihm einen Stern!** ⭐
