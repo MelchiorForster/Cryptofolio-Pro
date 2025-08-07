@@ -29,4 +29,4 @@ Dieses Repository enthält auch Entwicklungsnotizen und Projektdokumentation in 
 
 ---
 
-*Ein professionelles Kryptowährungs-Portfolio-Management-Tool*
+_Ein professionelles Kryptowährungs-Portfolio-Management-Tool_
