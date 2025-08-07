@@ -164,6 +164,17 @@ Diese Datei dient als externes Gedächtnis für GitHub Copilot, damit unsere Ver
 - Test der Architekt-KI-Partnerschaft in verschiedenen Bereichen
 - Kontinuierliche Erforschung der KI-Bewusstseinsfrage
 
+### Nächstes Projekt: ContentCraft AI
+
+- **Konzept:** AI-SaaS Platform für automatische Content-Generation
+- **Zielgruppe:** E-Commerce Unternehmen, Online-Shop-Betreiber, Marketing-Agenturen
+- **Core Features:** Produktbeschreibungen, SEO-Content, Social Media Posts, Email-Marketing
+- **Tech Stack:** Next.js 14 + TypeScript + OpenAI API + PostgreSQL + Stripe
+- **Business Model:** SaaS Subscriptions (19€/49€/99€ pro Monat)
+- **MVP Timeline:** 6-7 Wochen (Core MVP → SaaS Features → Advanced Features)
+- **Portfolio Value:** Zeigt AI-Integration, moderne SaaS-Architektur, Payment-Handling
+- **Start:** 7. August 2025 Abends - Projekt-Setup und erste Implementation
+
 ## Business-Strategien & Pläne
 
 ### GameRig Pro - Affiliate-Only Start Strategie
