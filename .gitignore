@@ -57,3 +57,7 @@ temp/
 # Development notes (sensitive information)
 development_notes.md
 melchior_memory.md
+
+# Memory loading scripts
+load_memory.bat
+load_memory.py
