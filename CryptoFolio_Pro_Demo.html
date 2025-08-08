@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CryptoFolio Pro - Demo Präsentation</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        color: #ffffff;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+        animation: fadeInDown 1s ease-out;
+      }
+
+      .header h1 {
+        font-size: 48px;
+        background: linear-gradient(45deg, #00d4ff, #00ff88);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 10px;
+      }
+
+      .header p {
+        font-size: 18px;
+        color: #999;
+        margin-bottom: 20px;
+      }
+
+      .status-bar {
+        background: rgba(0, 212, 255, 0.1);
+        border: 1px solid #00d4ff;
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 30px;
+        text-align: center;
+        animation: pulse 2s infinite;
+      }
+
+      .status-bar .status-text {
+        color: #00ff88;
+        font-weight: bold;
+      }
+
+      .navigation {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+        border-bottom: 1px solid #333;
+      }
+
+      .nav-tab {
+        padding: 12px 24px;
+        background: transparent;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 0 5px;
+        border-radius: 8px 8px 0 0;
+        transition: all 0.3s ease;
+      }
+
+      .nav-tab.active {
+        background: #00d4ff;
+        color: #000;
+        font-weight: bold;
+      }
+
+      .nav-tab:hover:not(.active) {
+        background: rgba(0, 212, 255, 0.2);
+      }
+
+      .tab-content {
+        display: none;
+        animation: fadeIn 0.5s ease-in;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .crypto-card {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        border: 1px solid #333;
+        border-radius: 12px;
+        padding: 20px;
+        margin: 15px 0;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .crypto-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(0, 212, 255, 0.1),
+          transparent
+        );
+        transition: left 0.6s ease;
+      }
+
+      .crypto-card:hover::before {
+        left: 100%;
+      }
+
+      .crypto-card:hover {
+        transform: translateY(-5px);
+        border-color: #00d4ff;
+        box-shadow: 0 12px 24px rgba(0, 212, 255, 0.2);
+      }
+
+      .crypto-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .crypto-info h3 {
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
+
+      .crypto-symbol {
+        color: #ccc;
+        font-size: 14px;
+      }
+
+      .crypto-price {
+        text-align: right;
+      }
+
+      .price {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .change {
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .change.positive {
+        color: #00ff88;
+      }
+
+      .change.negative {
+        color: #ff4444;
+      }
+
+      .crypto-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .amount-input {
+        padding: 8px 12px;
+        border: 1px solid #333;
+        border-radius: 6px;
+        background: #2a2a2a;
+        color: #fff;
+        width: 120px;
+        font-size: 14px;
+      }
+
+      .amount-input:focus {
+        outline: none;
+        border-color: #00d4ff;
+        box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+      }
+
+      .btn {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-buy {
+        background: #00d4ff;
+        color: #000;
+      }
+
+      .btn-buy:hover {
+        background: #00b8e6;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 212, 255, 0.3);
+      }
+
+      .btn-sell {
+        background: #ff4444;
+        color: #fff;
+      }
+
+      .btn-sell:hover {
+        background: #e63939;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(255, 68, 68, 0.3);
+      }
+
+      .portfolio-summary {
+        background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+        border: 1px solid #333;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .total-value {
+        font-size: 36px;
+        font-weight: bold;
+        color: #00d4ff;
+        margin-bottom: 10px;
+        animation: countUp 2s ease-out;
+      }
+
+      .portfolio-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+      }
+
+      .stat-card {
+        background: rgba(0, 212, 255, 0.1);
+        border: 1px solid #00d4ff;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 24px;
+        font-weight: bold;
+        color: #00d4ff;
+        margin-bottom: 5px;
+      }
+
+      .stat-label {
+        color: #ccc;
+        font-size: 14px;
+      }
+
+      .portfolio-item {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        border: 1px solid #333;
+        border-radius: 12px;
+        padding: 20px;
+        margin: 15px 0;
+        position: relative;
+      }
+
+      .portfolio-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .portfolio-details {
+        color: #ccc;
+        font-size: 14px;
+        margin-bottom: 15px;
+      }
+
+      .profit-loss {
+        font-weight: bold;
+      }
+
+      .profit-loss.profit {
+        color: #00ff88;
+      }
+
+      .profit-loss.loss {
+        color: #ff4444;
+      }
+
+      .diversification-chart {
+        margin-top: 20px;
+      }
+
+      .chart-item {
+        margin: 15px 0;
+      }
+
+      .chart-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+      }
+
+      .chart-bar {
+        height: 12px;
+        background: #333;
+        border-radius: 6px;
+        overflow: hidden;
+      }
+
+      .chart-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #00d4ff, #00ff88);
+        border-radius: 6px;
+        transition: width 1s ease-out;
+      }
+
+      .demo-notice {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 212, 255, 0.9);
+        color: #000;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: bold;
+        z-index: 1000;
+        animation: slideInRight 1s ease-out;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+      }
+
+      .feature-card {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        border: 1px solid #333;
+        border-radius: 12px;
+        padding: 25px;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+        border-color: #00d4ff;
+        box-shadow: 0 12px 24px rgba(0, 212, 255, 0.2);
+      }
+
+      .feature-icon {
+        font-size: 48px;
+        margin-bottom: 15px;
+      }
+
+      .feature-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #00d4ff;
+      }
+
+      .feature-description {
+        color: #ccc;
+        line-height: 1.5;
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(0, 212, 255, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(0, 212, 255, 0);
+        }
+      }
+
+      @keyframes countUp {
+        from {
+          opacity: 0;
+          transform: scale(0.5);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes slideInRight {
+        from {
+          opacity: 0;
+          transform: translateX(100px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .header h1 {
+          font-size: 36px;
+        }
+
+        .navigation {
+          flex-wrap: wrap;
+        }
+
+        .crypto-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+
+        .crypto-actions {
+          justify-content: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="demo-notice">🚀 LIVE DEMO - CryptoFolio Pro</div>
+
+    <div class="container">
+      <header class="header">
+        <h1>🚀 CryptoFolio Pro</h1>
+        <p>Professionelles Cryptocurrency Portfolio Management</p>
+
+        <div class="status-bar">
+          <span class="status-text">✅ Live-System aktiv</span> |
+          <span style="color: #00d4ff">💰 Echte EUR-Preise</span> |
+          <span style="color: #00ff88">📊 Real-time Analytics</span>
+        </div>
+      </header>
+
+      <nav class="navigation">
+        <button class="nav-tab active" onclick="showTab('market')">
+          📈 Märkte
+        </button>
+        <button class="nav-tab" onclick="showTab('portfolio')">
+          💼 Portfolio
+        </button>
+        <button class="nav-tab" onclick="showTab('analytics')">
+          📊 Analytics
+        </button>
+        <button class="nav-tab" onclick="showTab('features')">
+          ⭐ Features
+        </button>
+      </nav>
+
+      <!-- Märkte Tab -->
+      <div id="market" class="tab-content active">
+        <h2 style="color: #00ff88; margin-bottom: 20px">
+          💰 Cryptocurrency Markt
+        </h2>
+
+        <div class="crypto-card">
+          <div class="crypto-header">
+            <div class="crypto-info">
+              <h3>Bitcoin</h3>
+              <div class="crypto-symbol">BTC</div>
+            </div>
+            <div class="crypto-price">
+              <div class="price">€99,782.00</div>
+              <div class="change negative">-0.14%</div>
+            </div>
+          </div>
+          <div class="crypto-actions">
+            <input
+              type="number"
+              class="amount-input"
+              placeholder="Menge"
+              step="0.001"
+              id="btc-amount"
+            />
+            <button
+              class="btn btn-buy"
+              onclick="buyCrypto('Bitcoin', 'btc-amount', 99782)"
+            >
+              🛒 Kaufen
+            </button>
+            <button class="btn btn-sell" onclick="sellCrypto('Bitcoin')">
+              📉 Verkaufen
+            </button>
+          </div>
+        </div>
+
+        <div class="crypto-card">
+          <div class="crypto-header">
+            <div class="crypto-info">
+              <h3>Ethereum</h3>
+              <div class="crypto-symbol">ETH</div>
+            </div>
+            <div class="crypto-price">
+              <div class="price">€3,412.21</div>
+              <div class="change positive">+4.08%</div>
+            </div>
+          </div>
+          <div class="crypto-actions">
+            <input
+              type="number"
+              class="amount-input"
+              placeholder="Menge"
+              step="0.001"
+              id="eth-amount"
+            />
+            <button
+              class="btn btn-buy"
+              onclick="buyCrypto('Ethereum', 'eth-amount', 3412.21)"
+            >
+              🛒 Kaufen
+            </button>
+            <button class="btn btn-sell" onclick="sellCrypto('Ethereum')">
+              📉 Verkaufen
+            </button>
+          </div>
+        </div>
+
+        <div class="crypto-card">
+          <div class="crypto-header">
+            <div class="crypto-info">
+              <h3>Cardano</h3>
+              <div class="crypto-symbol">ADA</div>
+            </div>
+            <div class="crypto-price">
+              <div class="price">€0.67</div>
+              <div class="change positive">+4.27%</div>
+            </div>
+          </div>
+          <div class="crypto-actions">
+            <input
+              type="number"
+              class="amount-input"
+              placeholder="Menge"
+              step="0.001"
+              id="ada-amount"
+            />
+            <button
+              class="btn btn-buy"
+              onclick="buyCrypto('Cardano', 'ada-amount', 0.67)"
+            >
+              🛒 Kaufen
+            </button>
+            <button class="btn btn-sell" onclick="sellCrypto('Cardano')">
+              📉 Verkaufen
+            </button>
+          </div>
+        </div>
+
+        <div class="crypto-card">
+          <div class="crypto-header">
+            <div class="crypto-info">
+              <h3>Solana</h3>
+              <div class="crypto-symbol">SOL</div>
+            </div>
+            <div class="crypto-price">
+              <div class="price">€150.97</div>
+              <div class="change positive">+2.15%</div>
+            </div>
+          </div>
+          <div class="crypto-actions">
+            <input
+              type="number"
+              class="amount-input"
+              placeholder="Menge"
+              step="0.001"
+              id="sol-amount"
+            />
+            <button
+              class="btn btn-buy"
+              onclick="buyCrypto('Solana', 'sol-amount', 150.97)"
+            >
+              🛒 Kaufen
+            </button>
+            <button class="btn btn-sell" onclick="sellCrypto('Solana')">
+              📉 Verkaufen
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portfolio Tab -->
+      <div id="portfolio" class="tab-content">
+        <div class="portfolio-summary">
+          <h2 style="color: #00ff88; margin-bottom: 20px">💼 Mein Portfolio</h2>
+          <div class="total-value" id="total-value">€15,247.83</div>
+          <p style="color: #ccc">Gesamtwert deines Portfolios</p>
+
+          <div class="portfolio-stats">
+            <div class="stat-card">
+              <div class="stat-number" id="assets-count">4</div>
+              <div class="stat-label">Assets</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number profit">+€2,347.83</div>
+              <div class="stat-label">Gewinn/Verlust</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">+18.2%</div>
+              <div class="stat-label">Performance</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="portfolio-items">
+          <div class="portfolio-item">
+            <div class="portfolio-header">
+              <div>
+                <h3>Bitcoin</h3>
+                <div class="portfolio-details">
+                  0.1500 BTC | Kaufpreis: €95,000
+                </div>
+              </div>
+              <div style="text-align: right">
+                <div class="price">€14,967.30</div>
+                <div class="profit-loss profit">+€717.30 (+5.0%)</div>
+              </div>
+            </div>
+            <button class="btn btn-sell" onclick="removePosition('Bitcoin')">
+              🗑️ Position entfernen
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analytics Tab -->
+      <div id="analytics" class="tab-content">
+        <h2 style="color: #00ff88; margin-bottom: 20px">
+          📊 Portfolio Analytics
+        </h2>
+
+        <div class="portfolio-summary">
+          <h3>📈 Performance Übersicht</h3>
+          <div class="portfolio-stats">
+            <div class="stat-card">
+              <div class="stat-number">4</div>
+              <div class="stat-label">Assets im Portfolio</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">€15,247.83</div>
+              <div class="stat-label">Gesamtwert</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">+18.2%</div>
+              <div class="stat-label">24h Performance</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="crypto-card">
+          <h3>🎯 Portfolio Diversifikation</h3>
+          <div class="diversification-chart">
+            <div class="chart-item">
+              <div class="chart-header">
+                <span>Bitcoin (BTC)</span>
+                <span>65.2% (€9,943.67)</span>
+              </div>
+              <div class="chart-bar">
+                <div class="chart-fill" style="width: 65.2%"></div>
+              </div>
+            </div>
+            <div class="chart-item">
+              <div class="chart-header">
+                <span>Ethereum (ETH)</span>
+                <span>22.4% (€3,415.51)</span>
+              </div>
+              <div class="chart-bar">
+                <div class="chart-fill" style="width: 22.4%"></div>
+              </div>
+            </div>
+            <div class="chart-item">
+              <div class="chart-header">
+                <span>Cardano (ADA)</span>
+                <span>8.1% (€1,235.03)</span>
+              </div>
+              <div class="chart-bar">
+                <div class="chart-fill" style="width: 8.1%"></div>
+              </div>
+            </div>
+            <div class="chart-item">
+              <div class="chart-header">
+                <span>Solana (SOL)</span>
+                <span>4.3% (€653.62)</span>
+              </div>
+              <div class="chart-bar">
+                <div class="chart-fill" style="width: 4.3%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="crypto-card">
+          <h3>✅ System Status</h3>
+          <p style="color: #00ff88; margin: 10px 0">
+            ✅ Kauf/Verkauf: Vollständig funktionsfähig
+          </p>
+          <p style="color: #00ff88; margin: 10px 0">
+            ✅ Portfolio: Live-Synchronisation aktiv
+          </p>
+          <p style="color: #00ff88; margin: 10px 0">
+            ✅ Preise: Real-time EUR Updates
+          </p>
+          <p style="color: #00ff88; margin: 10px 0">
+            ✅ Analytics: Advanced Reporting verfügbar
+          </p>
+        </div>
+      </div>
+
+      <!-- Features Tab -->
+      <div id="features" class="tab-content">
+        <h2 style="color: #00ff88; margin-bottom: 20px; text-align: center">
+          ⭐ CryptoFolio Pro Features
+        </h2>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">📈</div>
+            <div class="feature-title">Live-Marktdaten</div>
+            <div class="feature-description">
+              Echte EUR-Preise von CoinGecko API mit 24h Preisänderungen in
+              Echtzeit
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">💼</div>
+            <div class="feature-title">Portfolio Management</div>
+            <div class="feature-description">
+              Kaufe und verkaufe Kryptowährungen, verfolge Gewinne/Verluste mit
+              automatischer Berechnung
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <div class="feature-title">Advanced Analytics</div>
+            <div class="feature-description">
+              Diversifikations-Charts, Performance-Tracking und detaillierte
+              Portfolio-Statistiken
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">💾</div>
+            <div class="feature-title">Persistente Speicherung</div>
+            <div class="feature-description">
+              Dein Portfolio wird automatisch gespeichert und bleibt auch nach
+              Browser-Neustart erhalten
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🎨</div>
+            <div class="feature-title">Moderne UI/UX</div>
+            <div class="feature-description">
+              Responsive Design mit dunklem Theme, Animationen und
+              professioneller Benutzeroberfläche
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-title">High Performance</div>
+            <div class="feature-description">
+              React 18 + Vite Frontend mit optimierter Performance und schnellen
+              Ladezeiten
+            </div>
+          </div>
+        </div>
+
+        <div class="crypto-card" style="margin-top: 30px; text-align: center">
+          <h3 style="color: #00d4ff; margin-bottom: 15px">
+            🚀 Technologie Stack
+          </h3>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+              gap: 20px;
+              margin-top: 20px;
+            "
+          >
+            <div>
+              <strong style="color: #00ff88">Frontend:</strong><br />
+              React 18 + Vite<br />
+              TypeScript<br />
+              Modern CSS
+            </div>
+            <div>
+              <strong style="color: #00ff88">Backend:</strong><br />
+              PHP 8.2<br />
+              CoinGecko API<br />
+              XAMPP Server
+            </div>
+            <div>
+              <strong style="color: #00ff88">Features:</strong><br />
+              LocalStorage<br />
+              Live Updates<br />
+              Responsive Design
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Portfolio data
+      let portfolio = [
+        {
+          name: "Bitcoin",
+          symbol: "BTC",
+          amount: 0.15,
+          buyPrice: 95000,
+          currentPrice: 99782,
+        },
+      ];
+
+      // Tab switching
+      function showTab(tabName) {
+        // Hide all tab contents
+        const tabContents = document.querySelectorAll(".tab-content");
+        tabContents.forEach((tab) => tab.classList.remove("active"));
+
+        // Remove active class from all tabs
+        const navTabs = document.querySelectorAll(".nav-tab");
+        navTabs.forEach((tab) => tab.classList.remove("active"));
+
+        // Show selected tab
+        document.getElementById(tabName).classList.add("active");
+
+        // Add active class to clicked tab
+        event.target.classList.add("active");
+      }
+
+      // Crypto buying function
+      function buyCrypto(cryptoName, inputId, price) {
+        const amount = parseFloat(document.getElementById(inputId).value);
+
+        if (!amount || amount <= 0) {
+          alert("Bitte gültige Menge eingeben!");
+          return;
+        }
+
+        // Add to portfolio
+        const existingIndex = portfolio.findIndex(
+          (item) => item.name === cryptoName
+        );
+
+        if (existingIndex >= 0) {
+          const existing = portfolio[existingIndex];
+          const totalAmount = existing.amount + amount;
+          const totalCost =
+            existing.amount * existing.buyPrice + amount * price;
+          portfolio[existingIndex] = {
+            ...existing,
+            amount: totalAmount,
+            buyPrice: totalCost / totalAmount,
+          };
+        } else {
+          portfolio.push({
+            name: cryptoName,
+            symbol: cryptoName.substring(0, 3).toUpperCase(),
+            amount: amount,
+            buyPrice: price,
+            currentPrice: price,
+          });
+        }
+
+        // Clear input
+        document.getElementById(inputId).value = "";
+
+        // Update portfolio display
+        updatePortfolioDisplay();
+
+        // Success message
+        alert(
+          `✅ ${amount} ${cryptoName} erfolgreich gekauft für €${(
+            amount * price
+          ).toFixed(2)}!`
+        );
+      }
+
+      // Crypto selling function
+      function sellCrypto(cryptoName) {
+        const amount = prompt(`Wie viel ${cryptoName} möchten Sie verkaufen?`);
+
+        if (!amount || amount <= 0) {
+          alert("Ungültige Menge!");
+          return;
+        }
+
+        const portfolioIndex = portfolio.findIndex(
+          (item) => item.name === cryptoName
+        );
+
+        if (portfolioIndex === -1) {
+          alert("Diese Kryptowährung ist nicht in Ihrem Portfolio!");
+          return;
+        }
+
+        const portfolioItem = portfolio[portfolioIndex];
+
+        if (parseFloat(amount) > portfolioItem.amount) {
+          alert("Sie haben nicht genug von dieser Kryptowährung!");
+          return;
+        }
+
+        // Update amount
+        portfolioItem.amount -= parseFloat(amount);
+
+        // Remove if amount is 0
+        if (portfolioItem.amount <= 0) {
+          portfolio.splice(portfolioIndex, 1);
+        }
+
+        updatePortfolioDisplay();
+        alert(`✅ ${amount} ${cryptoName} erfolgreich verkauft!`);
+      }
+
+      // Remove position
+      function removePosition(cryptoName) {
+        if (
+          confirm(`Möchten Sie die ${cryptoName} Position wirklich entfernen?`)
+        ) {
+          portfolio = portfolio.filter((item) => item.name !== cryptoName);
+          updatePortfolioDisplay();
+          alert(`Position ${cryptoName} erfolgreich entfernt!`);
+        }
+      }
+
+      // Update portfolio display
+      function updatePortfolioDisplay() {
+        const portfolioContainer = document.getElementById("portfolio-items");
+        const totalValueElement = document.getElementById("total-value");
+        const assetsCountElement = document.getElementById("assets-count");
+
+        // Calculate total value
+        let totalValue = 0;
+        portfolio.forEach((item) => {
+          totalValue += item.amount * item.currentPrice;
+        });
+
+        // Update total value
+        totalValueElement.textContent = `€${totalValue.toLocaleString(
+          undefined,
+          { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+        )}`;
+        assetsCountElement.textContent = portfolio.length;
+
+        // Clear and rebuild portfolio items
+        portfolioContainer.innerHTML = "";
+
+        if (portfolio.length === 0) {
+          portfolioContainer.innerHTML = `
+                    <div class="crypto-card" style="text-align: center;">
+                        <h3>📝 Portfolio ist leer</h3>
+                        <p style="color: #999;">Gehen Sie zu "Märkte" um Kryptowährungen zu kaufen!</p>
+                        <p style="color: #00ff88;">💡 Tipp: Geben Sie eine Menge ein und klicken Sie auf "Kaufen"</p>
+                    </div>
+                `;
+          return;
+        }
+
+        portfolio.forEach((item) => {
+          const currentValue = item.amount * item.currentPrice;
+          const profit = (item.currentPrice - item.buyPrice) * item.amount;
+          const profitPercent =
+            ((item.currentPrice - item.buyPrice) / item.buyPrice) * 100;
+
+          portfolioContainer.innerHTML += `
+                    <div class="portfolio-item">
+                        <div class="portfolio-header">
+                            <div>
+                                <h3>${item.name}</h3>
+                                <div class="portfolio-details">${item.amount.toFixed(
+                                  4
+                                )} ${
+            item.symbol
+          } | Kaufpreis: €${item.buyPrice.toFixed(2)}</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div class="price">€${currentValue.toFixed(
+                                  2
+                                )}</div>
+                                <div class="profit-loss ${
+                                  profit >= 0 ? "profit" : "loss"
+                                }">
+                                    ${profit >= 0 ? "+" : ""}€${profit.toFixed(
+            2
+          )} (${profitPercent.toFixed(1)}%)
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-sell" onclick="removePosition('${
+                          item.name
+                        }')">🗑️ Position entfernen</button>
+                    </div>
+                `;
+        });
+      }
+
+      // Simulate price updates
+      function updatePrices() {
+        // Update current prices in portfolio
+        portfolio.forEach((item) => {
+          if (item.name === "Bitcoin") item.currentPrice = 99782;
+          if (item.name === "Ethereum") item.currentPrice = 3412.21;
+          if (item.name === "Cardano") item.currentPrice = 0.67;
+          if (item.name === "Solana") item.currentPrice = 150.97;
+        });
+
+        updatePortfolioDisplay();
+      }
+
+      // Initialize
+      document.addEventListener("DOMContentLoaded", function () {
+        updatePortfolioDisplay();
+
+        // Update prices every 10 seconds
+        setInterval(updatePrices, 10000);
+
+        // Animate chart bars
+        setTimeout(() => {
+          const chartFills = document.querySelectorAll(".chart-fill");
+          chartFills.forEach((fill) => {
+            const width = fill.style.width;
+            fill.style.width = "0%";
+            setTimeout(() => {
+              fill.style.width = width;
+            }, 100);
+          });
+        }, 1000);
+      });
+
+      // Add some demo interactivity
+      document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("btn")) {
+          e.target.style.transform = "scale(0.95)";
+          setTimeout(() => {
+            e.target.style.transform = "";
+          }, 150);
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -18,8 +18,19 @@ export const useCryptoPrices = (
         const response = await axios.get(
           `${API_BASE}/test_prices.php?ids=${cryptoIds}`
         );
-        setPrices(response.data);
-        setError(null);
+
+        // Handle new API response structure with metadata
+        if (response.data.success) {
+          setPrices(response.data.data);
+          setError(null);
+
+          // Log data source for debugging
+          console.log(
+            `🔥 Data Source: ${response.data.source} | Updated: ${response.data.timestamp}`
+          );
+        } else {
+          throw new Error(response.data.error || "API returned error");
+        }
       } catch (err) {
         setError("Failed to fetch crypto prices");
         console.error("Price fetch error:", err);
